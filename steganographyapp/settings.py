@@ -23,8 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1v3onk-zs85qw)9=snijbb7tgjn!5uruoh3sh0)qw!@-&6=0q='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 DEBUG_PROPAGATE_EXCEPTIONS = True
+
 
 ALLOWED_HOSTS = ['kanesteganography.herokuapp.com', 'localhost']
 
