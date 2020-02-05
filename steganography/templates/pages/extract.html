@@ -25,14 +25,17 @@
                     ></v-file-input>
                 </template>
                 <v-textarea
+                    background-color="white"
                     outlined
-                    clearable
                     dense
+                    filled
                     single-line
                     label="Secret message"
                     auto-grow
-                    dark
+                    light
                     rows="2"
+                    disabled
+                    
                     v-model="textExtract"
                 ></v-textarea>
                 <h5 class="mt-5 font-weight-regular white--text">Press the button below to extract your secret message.</h5>
