@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}   
+    Extract Text
+{% endblock %}
+
+{% block content %}
+    <div class="extract--container">
+        <div class="d-flex align-center input--container">
+            <div>
+                <h1 class="font-weight-bold white--text">Received an image with a secret message?</h1>
+                <h2 class="font-weight-bold white--text">Use this awesome tool.</h2>
+                <h4 class="mt-5 font-weight-regular white--text">Upload the image and extract the secret message</h4>
+                <template>
+                    <v-file-input
+                        label="Upload image"
+                        prepend-icon="mdi-camera"
+                        dark
+                        chips
+                        outlined
+                        dense
+                        v-model="image"
+                        accept="image/*"
+                        class="mt-5"
+                    ></v-file-input>
+                </template>
+                <v-textarea
+                    outlined
+                    clearable
+                    dense
+                    single-line
+                    label="Secret message"
+                    auto-grow
+                    dark
+                    rows="2"
+                    v-model="textExtract"
+                ></v-textarea>
+                <h5 class="mt-5 font-weight-regular white--text">Press the button below to extract your secret message.</h5>
+                <div class="mt-5 d-flex justify-center button--container">
+                    <button class="font-weight-bold overline" @click="extractImage">
+                        <div class="d-flex align-center">
+                            <i class="mr-2 fas fa-fw fa-arrow-circle-right"></i>
+                            Extract secret message
+                        </div>
+                    </button>
+                </div>
+                 <div class="mt-2 text-center error--text" v-if="error">Make sure an image is uploaded and it contains a secret message!</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

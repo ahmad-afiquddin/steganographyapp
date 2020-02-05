@@ -1,0 +1,128 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Lobster" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <link href="{% static '/dist/project.css' %}" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/c63638e60d.js" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <title>{% block title %}{% endblock title %}</title>
+</head>
+<body>
+  <div id="app">
+        <v-app class="app--container" :class="mobile? 'mobile':tablet? 'tablet':''" style="background-image:url({% static 'images/background.png' %}) !important;">
+            {% comment %}Navbar{% endcomment %}
+            {% include 'partials/navbar.html' %}
+            <v-content class="app-overlay">
+                <div class="content">
+                    {% block content %}
+                    {% endblock content %}
+                </div>
+            </v-content>
+        </v-app>
+  </div>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>  
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script>
+    new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        delimiters: ['[[', ']]'],
+        data: {
+            mobile:false,
+            tablet:false,
+            embedUUID:null,
+            extractUUID:null,
+            imageURL:null,
+            image:null,
+            textEmbed:null,
+            textExtract:null,
+            loading:false,
+            error:false,
+        },
+        methods: {
+            resizeWindow() {
+                let width = window.innerWidth;
+                if (width >= 992) {
+                    this.mobile = false;
+                    this.tablet = false;
+                } 
+                else if (width >= 768){            
+                    this.mobile = false;
+                    this.tablet = true;
+                }
+                else {           
+                    this.mobile = true;
+                    this.tablet = false;
+                }
+            },
+            embedImage() {
+                const API_URL = '/api/embed-image/' 
+                let image = this.image
+                let text = this.textEmbed
+                let vueInstance = this;
+                let formData = new FormData();
+                formData.append('image', image);
+                formData.append('text', text);
+                this.loading = true,
+
+                $.ajax({
+                    url:API_URL,
+                    type:'post',
+                    data:formData,
+                    contentType:false,
+                    processData:false,
+                    success:function(response) {
+                        vueInstance.imageURL = response.image;
+                        vueInstance.loading = false;
+                        vueInstance.error = false;
+                    },
+                    error:function(error) {
+                        vueInstance.loading = false;
+                        vueInstance.error = true;
+                    }
+                });
+            },
+            extractImage() {
+                const API_URL = '/api/extract-image/' 
+
+                let image = this.image
+                let vueInstance = this;
+                let formData = new FormData();
+                formData.append('image', image);
+
+                $.ajax({
+                    url:API_URL,
+                    type:'post',
+                    data:formData,
+                    contentType:false,
+                    processData:false,
+                    success:function(response) {
+                        vueInstance.textExtract = response.text;
+                        vueInstance.loading = false;
+                        vueInstance.error = false;
+                    },
+                    error:function(error) {
+                        vueInstance.error = true;
+                    }
+                });
+            },
+        },
+        mounted() {
+            this.resizeWindow();
+            window.addEventListener("resize", this.resizeWindow);
+        },
+        beforeDestroy() {
+            window.removeEventListener("resize", this.resizeWindow);
+        }
+    })
+  </script>
+</body>
+</html>
