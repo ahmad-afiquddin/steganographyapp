@@ -41,9 +41,13 @@
                 <h5 class="mt-5 font-weight-regular white--text">Press the button below to extract your secret message.</h5>
                 <div class="mt-5 d-flex justify-center button--container">
                     <button class="font-weight-bold overline" @click="extractImage">
-                        <div class="d-flex align-center">
+                        <div class="d-flex align-center" v-if="!loading">
                             <i class="mr-2 fas fa-fw fa-arrow-circle-right"></i>
                             Extract secret message
+                        </div>
+                        <div class="d-flex align-center" v-if="loading">
+                            <div class="mr-2 loading-spinner"><i class="fas fa-spinner"></i></div>
+                            Loading
                         </div>
                     </button>
                 </div>

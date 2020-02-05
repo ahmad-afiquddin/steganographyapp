@@ -71,7 +71,7 @@
                 let formData = new FormData();
                 formData.append('image', image);
                 formData.append('text', text);
-                this.loading = true,
+                this.loading = true;
 
                 $.ajax({
                     url:API_URL,
@@ -97,6 +97,7 @@
                 let vueInstance = this;
                 let formData = new FormData();
                 formData.append('image', image);
+                this.loading = true;
 
                 $.ajax({
                     url:API_URL,
