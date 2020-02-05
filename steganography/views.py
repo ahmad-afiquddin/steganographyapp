@@ -5,7 +5,6 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
-from rest_framework import status
 
 # Local dependencies, import serializers
 from steganography.serializers import EmbedImageSerializer, ExtractImageSerializer
