@@ -72,6 +72,7 @@
                 formData.append('image', image);
                 formData.append('text', text);
                 this.loading = true;
+                this.error = false;
 
                 $.ajax({
                     url:API_URL,
@@ -98,7 +99,8 @@
                 let formData = new FormData();
                 formData.append('image', image);
                 this.loading = true;
-
+                this.error = false;
+                
                 $.ajax({
                     url:API_URL,
                     type:'post',
@@ -111,6 +113,7 @@
                         vueInstance.error = false;
                     },
                     error:function(error) {
+                        vueInstance.loading = false;
                         vueInstance.error = true;
                     }
                 });

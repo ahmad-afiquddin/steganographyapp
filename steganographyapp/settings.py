@@ -56,6 +56,12 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'steganographyapp.urls'
