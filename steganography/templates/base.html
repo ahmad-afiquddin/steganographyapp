@@ -14,7 +14,11 @@
 
 </head>
 <body>
-  <div id="app">
+    <div id="loading" class="loading">
+        <div class="loader">
+        </div>
+    </div>
+    <div id="app" v-if="loaded">
         <v-app class="app--container" :class="mobile? 'mobile':tablet? 'tablet':''" style="background-image:url({% static 'images/background.png' %}) !important;">
             {% comment %}Navbar{% endcomment %}
             {% include 'partials/navbar.html' %}
@@ -25,7 +29,7 @@
                 </div>
             </v-content>
         </v-app>
-  </div>
+    </div>
   <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -33,7 +37,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
   <script>
-    new Vue({
+    const app = new Vue({
         el: '#app',
         vuetify: new Vuetify(),
         delimiters: ['[[', ']]'],
@@ -47,6 +51,7 @@
             textEmbed:null,
             textExtract:null,
             loading:false,
+            loaded:true,
             error:false,
         },
         methods: {
@@ -129,6 +134,12 @@
             window.removeEventListener("resize", this.resizeWindow);
         }
     })
+  </script>
+  <script>
+    $(document).ready(() => {
+        $("#loading").css("display","none");
+        app.loaded = true;
+    });
   </script>
 </body>
 </html>
